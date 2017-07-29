@@ -1,0 +1,6 @@
+{
+	"comment": "",
+	"ignore": "test appengine",
+	"package": [],
+	"rootPath": "github.com/adamryman/ambition"
+}
