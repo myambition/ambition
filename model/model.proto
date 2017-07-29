@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package model;
+
+import "github.com/TuneLab/truss/deftree/googlethirdparty/annotations.proto";
+
+service Model {
+  // CreateAction requires a UserID and a Name
+  rpc CreateAction(Action) returns (Action) {}
+
+  // CreateOccurrence requires a UserID and Occurrence.ActionID
+  // TODO: If Datetime is provided it will be used
+  // TODO: If Data is provided it will be stored
+  rpc
+  CreateOccurrence(CreateOccurrenceRequest) returns (Occurrence) {}
+
+  // ReadAction requires either an ID, or BOTH a UserId and Name
+  rpc ReadAction(Action) returns (Action) {}
+
+  // ReadAction
+  // TODO:
+  rpc ReadActions(User) returns (ActionsResponse) {}
+
+  rpc ReadOccurrencesByDate(OccurrencesByDateReq) returns (OccurrencesResponse) {
+    option (google.api.http) = {
+      get: "/occurrences"
+    };
+  }
+
+  // ReadOccurrences takes an action which must be populated with a
+  // UserID and an ActionID which must match the values for that action
+  // TODO:
+  rpc ReadOccurrences(Action) returns (OccurrencesResponse) {}
+
+
+}
+
+message OccurrencesByDateReq {
+  int64 ActionID = 1;
+  string StartDate = 2;
+  string EndDate = 3;
+}
+
+
+message Action {
+  int64 ID= 1;
+  string Name = 2;
+  // TODO: Think about moving this to ambition-users
+  // with a UserAction table
+  int64 UserID= 3;
+  // string TrelloID= 4;
+}
+
+message CreateOccurrenceRequest {
+  int64 UserID = 1;
+  Occurrence Occurrence = 2;
+}
+
+message Occurrence {
+  int64 ID = 1;
+  int64 ActionID = 2;
+  string Datetime = 3;
+  string Data = 4;
+}
+
+message User {
+  int64 UserID= 1;
+}
+
+/*message ActionResponse {*/
+  /*Action Action = 1;*/
+  /*string Error = 2;*/
+/*}*/
+
+message ActionsResponse {
+  repeated Action Actions = 1;
+}
+
+message OccurrencesResponse {
+  repeated Occurrence Occurrences = 1;
+}
+
