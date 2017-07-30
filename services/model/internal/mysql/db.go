@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 	//"github.com/adamryman/db"
 
-	pb "github.com/adamryman/ambition/services/model/model-service"
+	pb "github.com/myambition/ambition/services/model/model-service"
 )
 
 func Open(conn string) (*Database, error) {

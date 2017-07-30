@@ -21,8 +21,8 @@ import (
 	"golang.org/x/net/context"
 
 	// This Service
-	pb "github.com/adamryman/ambition/services/model/model-service"
-	"github.com/adamryman/ambition/services/model/model-service/svc"
+	pb "github.com/myambition/ambition/services/model/model-service"
+	"github.com/myambition/ambition/services/model/model-service/svc"
 )
 
 var (

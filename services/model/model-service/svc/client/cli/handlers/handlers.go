@@ -6,7 +6,7 @@
 package handlers
 
 import (
-	pb "github.com/adamryman/ambition/services/model/model-service"
+	pb "github.com/myambition/ambition/services/model/model-service"
 )
 
 // CreateAction implements Service.

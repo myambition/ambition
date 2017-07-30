@@ -13,8 +13,8 @@ import (
 	"github.com/go-kit/kit/log"
 
 	// This Service
-	"github.com/adamryman/ambition/services/users/users-service/svc/server"
-	"github.com/adamryman/ambition/services/users/users-service/svc/server/cli"
+	"github.com/myambition/ambition/services/users/users-service/svc/server"
+	"github.com/myambition/ambition/services/users/users-service/svc/server/cli"
 )
 
 func main() {

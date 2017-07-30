@@ -26,7 +26,7 @@ import (
 	"github.com/pkg/errors"
 
 	// This service
-	pb "github.com/adamryman/ambition/services/rello/rello-service"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
 )
 
 const contentType = "application/json; charset=utf-8"

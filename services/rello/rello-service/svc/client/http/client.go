@@ -21,8 +21,8 @@ import (
 	"golang.org/x/net/context"
 
 	// This Service
-	pb "github.com/adamryman/ambition/services/rello/rello-service"
-	"github.com/adamryman/ambition/services/rello/rello-service/svc"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
+	"github.com/myambition/ambition/services/rello/rello-service/svc"
 )
 
 var (

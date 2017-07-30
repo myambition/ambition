@@ -3,10 +3,10 @@ language: go
 go:
   - 1.8.x
 
-go_import_path: github.com/adamryman/ambition
+go_import_path: github.com/myambition/ambition
 
 script:
-  - go build -v github.com/adamryman/ambition/...
+  - go build -v github.com/myambition/ambition/...
 
 notifications:
   email: false

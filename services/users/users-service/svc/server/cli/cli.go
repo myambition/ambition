@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/adamryman/ambition/services/users/users-service/svc/server"
+	"github.com/myambition/ambition/services/users/users-service/svc/server"
 )
 
 // Config will be populated by ENV vars on initilization

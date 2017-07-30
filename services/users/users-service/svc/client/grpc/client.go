@@ -16,8 +16,8 @@ import (
 	grpctransport "github.com/go-kit/kit/transport/grpc"
 
 	// This Service
-	pb "github.com/adamryman/ambition/services/users/users-service"
-	"github.com/adamryman/ambition/services/users/users-service/svc"
+	pb "github.com/myambition/ambition/services/users/users-service"
+	"github.com/myambition/ambition/services/users/users-service/svc"
 )
 
 // New returns an service backed by a gRPC client connection. It is the

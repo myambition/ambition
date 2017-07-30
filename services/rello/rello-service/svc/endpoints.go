@@ -16,7 +16,7 @@ import (
 
 	"github.com/go-kit/kit/endpoint"
 
-	pb "github.com/adamryman/ambition/services/rello/rello-service"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
 )
 
 // Endpoints collects all of the endpoints that compose an add service. It's

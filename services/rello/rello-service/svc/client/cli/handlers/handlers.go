@@ -6,7 +6,7 @@
 package handlers
 
 import (
-	pb "github.com/adamryman/ambition/services/rello/rello-service"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
 )
 
 // CheckListWebhook implements Service.

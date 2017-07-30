@@ -6,7 +6,7 @@
 package handlers
 
 import (
-	pb "github.com/adamryman/ambition/services/users/users-service"
+	pb "github.com/myambition/ambition/services/users/users-service"
 )
 
 // CreateUser implements Service.

@@ -17,7 +17,7 @@ import (
 	grpctransport "github.com/go-kit/kit/transport/grpc"
 
 	// This Service
-	pb "github.com/adamryman/ambition/services/rello/rello-service"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
 )
 
 // MakeGRPCServer makes a set of endpoints available as a gRPC RelloServer.

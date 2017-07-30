@@ -20,10 +20,10 @@ import (
 	"github.com/pkg/errors"
 
 	// This Service
-	pb "github.com/adamryman/ambition/services/users/users-service"
-	"github.com/adamryman/ambition/services/users/users-service/svc/client/cli/handlers"
-	grpcclient "github.com/adamryman/ambition/services/users/users-service/svc/client/grpc"
-	httpclient "github.com/adamryman/ambition/services/users/users-service/svc/client/http"
+	pb "github.com/myambition/ambition/services/users/users-service"
+	"github.com/myambition/ambition/services/users/users-service/svc/client/cli/handlers"
+	grpcclient "github.com/myambition/ambition/services/users/users-service/svc/client/grpc"
+	httpclient "github.com/myambition/ambition/services/users/users-service/svc/client/http"
 )
 
 var (

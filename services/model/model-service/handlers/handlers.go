@@ -8,10 +8,10 @@ import (
 
 	"github.com/pkg/errors"
 
-	pb "github.com/adamryman/ambition/services/model/model-service"
+	pb "github.com/myambition/ambition/services/model/model-service"
 	//sql "github.com/adamryman/model/internal/sqlite"
-	sql "github.com/adamryman/ambition/services/model/internal/mysql"
 	"github.com/adamryman/kit/dbconn"
+	sql "github.com/myambition/ambition/services/model/internal/mysql"
 )
 
 // NewService returns a naïve, stateless implementation of Service.

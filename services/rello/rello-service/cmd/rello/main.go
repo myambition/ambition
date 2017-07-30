@@ -20,10 +20,10 @@ import (
 	"github.com/pkg/errors"
 
 	// This Service
-	pb "github.com/adamryman/ambition/services/rello/rello-service"
-	"github.com/adamryman/ambition/services/rello/rello-service/svc/client/cli/handlers"
-	grpcclient "github.com/adamryman/ambition/services/rello/rello-service/svc/client/grpc"
-	httpclient "github.com/adamryman/ambition/services/rello/rello-service/svc/client/http"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
+	"github.com/myambition/ambition/services/rello/rello-service/svc/client/cli/handlers"
+	grpcclient "github.com/myambition/ambition/services/rello/rello-service/svc/client/grpc"
+	httpclient "github.com/myambition/ambition/services/rello/rello-service/svc/client/http"
 )
 
 var (

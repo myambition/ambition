@@ -9,12 +9,12 @@ import (
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 
-	modelSVC "github.com/adamryman/ambition/services/model/model-service"
-	pb "github.com/adamryman/ambition/services/rello/rello-service"
-	usersSVC "github.com/adamryman/ambition/services/users/users-service"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
+	modelSVC "github.com/myambition/ambition/services/model/model-service"
+	usersSVC "github.com/myambition/ambition/services/users/users-service"
 
-	modelClient "github.com/adamryman/ambition/services/model/model-service/svc/client/grpc"
-	usersClient "github.com/adamryman/ambition/services/users/users-service/svc/client/grpc"
+	modelClient "github.com/myambition/ambition/services/model/model-service/svc/client/grpc"
+	usersClient "github.com/myambition/ambition/services/users/users-service/svc/client/grpc"
 
 	"github.com/davecgh/go-spew/spew"
 )

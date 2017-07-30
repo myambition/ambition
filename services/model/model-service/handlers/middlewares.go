@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	pb "github.com/adamryman/ambition/services/model/model-service"
-	"github.com/adamryman/ambition/services/model/model-service/svc"
+	pb "github.com/myambition/ambition/services/model/model-service"
+	"github.com/myambition/ambition/services/model/model-service/svc"
 )
 
 // WrapEndpoints accepts the service's entire collection of endpoints, so that a

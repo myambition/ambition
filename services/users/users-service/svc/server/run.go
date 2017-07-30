@@ -18,9 +18,9 @@ import (
 	"github.com/go-kit/kit/log"
 
 	// This Service
-	pb "github.com/adamryman/ambition/services/users/users-service"
-	"github.com/adamryman/ambition/services/users/users-service/handlers"
-	"github.com/adamryman/ambition/services/users/users-service/svc"
+	pb "github.com/myambition/ambition/services/users/users-service"
+	"github.com/myambition/ambition/services/users/users-service/handlers"
+	"github.com/myambition/ambition/services/users/users-service/svc"
 )
 
 // Config contains the required fields for running a server

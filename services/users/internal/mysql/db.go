@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"
 
-	pb "github.com/adamryman/ambition/services/users/users-service"
+	pb "github.com/myambition/ambition/services/users/users-service"
 )
 
 type Database struct {
