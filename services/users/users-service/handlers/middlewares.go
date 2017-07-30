@@ -1,6 +1,12 @@
 package handlers
 
 import (
+	"golang.org/x/net/context"
+	"os"
+
+	"github.com/go-kit/kit/endpoint"
+	"github.com/go-kit/kit/log"
+
 	pb "github.com/myambition/ambition/services/users/users-service"
 	"github.com/myambition/ambition/services/users/users-service/svc"
 )
@@ -24,11 +30,25 @@ func WrapEndpoints(in svc.Endpoints) svc.Endpoints {
 	// report the endpoint name for free.
 	// github.com/TuneLab/truss/_example/middlewares/labeledmiddlewares.go for examples.
 	// in.WrapAllLabeledExcept(errorCounter(statsdCounter), "Status", "Ping")
+	in.WrapAllLabeledExcept(LogError)
 
 	// How to apply a middleware to a single endpoint.
 	// in.ExampleEndpoint = authMiddleware(in.ExampleEndpoint)
 
 	return in
+}
+
+func LogError(label string, in endpoint.Endpoint) endpoint.Endpoint {
+	l := log.NewJSONLogger(os.Stdout)
+	return func(ctx context.Context, req interface{}) (resp interface{}, err error) {
+		resp, err = in(ctx, req)
+		defer func(inerr error) {
+			if inerr != nil {
+				l.Log("endpoint", label, "err", err)
+			}
+		}(err)
+		return
+	}
 }
 
 func WrapService(in pb.UsersServer) pb.UsersServer {
