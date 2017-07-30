@@ -7,7 +7,10 @@ services="rello users model"
 
 for service in $services; do
 	(
+		echo "building $service"
 		cd $service;
-		truss *.proto;
+		mkdir -p target
+		go build -o ./target/newrun ./${service}-service/cmd/${service}-server/
+		mv ./target/newrun ./target/run
 	)
 done
