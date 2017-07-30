@@ -6,8 +6,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	//sql "github.com/adamryman/ambition/users/sqlite"
-	sql "github.com/adamryman/ambition/users/mysql"
+	//sql "github.com/adamryman/ambition/users/internal/sqlite"
+	sql "github.com/adamryman/ambition/users/internal/mysql"
 	pb "github.com/adamryman/ambition/users/users-service"
 	"github.com/adamryman/kit/dbconn"
 )

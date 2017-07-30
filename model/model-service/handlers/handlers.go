@@ -9,8 +9,8 @@ import (
 	"github.com/pkg/errors"
 
 	pb "github.com/adamryman/ambition/model/model-service"
-	//sql "github.com/adamryman/model/sqlite"
-	sql "github.com/adamryman/ambition/model/mysql"
+	//sql "github.com/adamryman/model/internal/sqlite"
+	sql "github.com/adamryman/ambition/model/internal/mysql"
 	"github.com/adamryman/kit/dbconn"
 )
 
