@@ -9,8 +9,8 @@ import (
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 
-	pb "github.com/myambition/ambition/services/rello/rello-service"
 	modelSVC "github.com/myambition/ambition/services/model/model-service"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
 	usersSVC "github.com/myambition/ambition/services/users/users-service"
 
 	modelClient "github.com/myambition/ambition/services/model/model-service/svc/client/grpc"
@@ -56,8 +56,9 @@ type relloService struct {
 func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpdate) (*pb.Empty, error) {
 	fmt.Println(spew.Sdump(in))
 	fmt.Println(spew.Sdump(in.GetAction()))
-	fmt.Println(spew.Sdump(in.GetAction().GetMemberCreator))
+	fmt.Println(spew.Sdump(in.GetAction().GetIdMemberCreator()))
 
+	fmt.Println("Contacting users service")
 	user, err := s.users.ReadUser(ctx,
 		&usersSVC.User{
 			Trello: &usersSVC.TrelloInfo{
@@ -67,9 +68,11 @@ func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpda
 		})
 	if err != nil {
 		//TODO: Wrap error
+		fmt.Println("wut", err)
 		return nil, err
 	}
 
+	fmt.Println("switch " + in.Action.Type)
 	cItem := in.Action.Data.CheckItem
 	switch in.Action.Type {
 	case "createCheckItem":
@@ -78,6 +81,7 @@ func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpda
 		// UserId hardcoded to 1
 		_ = in.Action.MemberCreator.Id
 
+		fmt.Println("userid", user.GetID())
 		action, err := s.model.CreateAction(ctx,
 			&modelSVC.Action{
 				Name:   cItem.GetName(),
