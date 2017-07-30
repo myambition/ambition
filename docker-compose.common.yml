@@ -1,0 +1,38 @@
+version: "2"
+services:
+  model:
+    expose:
+      - ${MODEL_PORT}
+    environment:
+      GRPC_ADDR: :${MODEL_PORT}
+      MYSQL_DATABASE: model
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      SQLITE3: ${SQLITE3}
+  users:
+    expose:
+      - ${USERS_PORT}
+    environment:
+      GRPC_ADDR: :${USERS_PORT}
+      MYSQL_DATABASE: users
+      MYSQL_USER: root
+      MYSQL_PASSWORD:  ${MYSQL_PASSWORD}
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      SQLITE3: "target/test.db"
+      TRELLO_ID: ${TRELLO_ID}
+  rello:
+    expose:
+      - ${RELLO_PORT}
+    environment:
+      HTTP_ADDR: :${RELLO_PORT}
+      MODEL_HOST: model
+      MODEL_PORT: ${MODEL_PORT}
+      USERS_HOST: users
+      USERS_PORT: ${USERS_PORT}
+  mysql:
+    image: adamryman/ambition-mysql
+    expose:
+      - 3306

@@ -1,0 +1,42 @@
+version: "2"
+services:
+  model:
+    extends:
+      file: docker-compose.common.yml
+      service: model
+    image: adamryman/fsrestarter
+    ports:
+      - ${MODEL_PORT_EXTERNAL}:${MODEL_PORT}
+    volumes:
+      - "$GOPATH/src/github.com/myambition/ambition/services/model/target:/target"
+  users:
+    extends:
+      file: docker-compose.common.yml
+      service: users
+    image: adamryman/fsrestarter
+    ports:
+      - ${USERS_PORT_EXTERNAL}:${USERS_PORT}
+    volumes:
+      - "$GOPATH/src/github.com/myambition/ambition/services/users/target:/target"
+    env_file: .secret
+  rello:
+    extends:
+      file: docker-compose.common.yml
+      service: rello
+    image: adamryman/fsrestarter
+    ports:
+      - ${RELLO_PORT_EXTERNAL}:${RELLO_PORT}
+    volumes:
+      - "$GOPATH/src/github.com/myambition/ambition/services/rello/target:/target"
+  mysql:
+    image: myambition/ambition-mysql
+    extends:
+      file: docker-compose.common.yml
+      service: mysql
+    ports:
+      - ${MYSQL_PORT_EXTERNAL}:3306
+    volumes:
+      - mysqlvol:/var/lib/mysql
+
+volumes:
+  mysqlvol:
