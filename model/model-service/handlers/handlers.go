@@ -15,7 +15,7 @@ import (
 )
 
 // NewService returns a naïve, stateless implementation of Service.
-func NewService() pb.ModelService {
+func NewService() pb.ModelServer {
 	//database, err := sql.Open(os.Getenv("SQLITE3"))
 
 	database, err := sql.Open(dbconn.FromENV("MYSQL").MySQL())
