@@ -42,11 +42,13 @@ var (
 	_ = errors.Wrap
 )
 
+var customHTTPBefore httptransport.RequestFunc
+
 // MakeHTTPHandler returns a handler that makes a set of endpoints available
 // on predefined paths.
 func MakeHTTPHandler(ctx context.Context, endpoints Endpoints, logger log.Logger) http.Handler {
 	serverOptions := []httptransport.ServerOption{
-		httptransport.ServerBefore(headersToContext),
+		httptransport.ServerBefore(headersToContext, customHTTPBefore),
 		httptransport.ServerErrorEncoder(errorEncoder),
 		httptransport.ServerAfter(httptransport.SetContentType(contentType)),
 	}
