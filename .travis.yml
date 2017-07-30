@@ -1,7 +1,6 @@
 language: go
 
 go:
-  - tip
   - 1.8.x
 
 go_import_path: github.com/adamryman/ambition
