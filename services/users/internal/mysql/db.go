@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"database/sql"
+	"fmt"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -27,8 +28,15 @@ func Open(conn string) (*Database, error) {
 }
 
 func setupDB(db *sql.DB) error {
-	const adam = `DELETE FROM users WHERE id = 1; INSERT INTO users (id, username, trello_id) VALUES (?, ?, ?)`
-	_, err := db.Exec(adam, 1, "adamryman", os.Getenv("TRELLO_ID"))
+	const delete = `DELETE FROM users WHERE id = 1`
+	_, err := db.Exec(delete)
+	if err != nil {
+		return err
+	}
+	const adam = `INSERT INTO users (id, username, trello_id) VALUES (?, ?, ?)`
+	trello_id := os.Getenv("TRELLO_ID")
+	fmt.Println(trello_id)
+	_, err = db.Exec(adam, 1, "adamryman", trello_id)
 	if err != nil {
 		return err
 	}
