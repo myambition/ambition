@@ -54,6 +54,11 @@ func MakeHTTPHandler(ctx context.Context, endpoints Endpoints, logger log.Logger
 	}
 	m := mux.NewRouter()
 
+	m.Methods("HEAD").Path("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		return
+	})
+
 	m.Methods("POST").Path("/").Handler(httptransport.NewServer(
 		ctx,
 		endpoints.CheckListWebhookEndpoint,
