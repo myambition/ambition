@@ -10,19 +10,19 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
-      SQLITE3: ${SQLITE3}
   users:
     expose:
       - ${USERS_PORT}
+    env_file:
+      - .secret.env
     environment:
+      #TRELLO_ID: ${TRELLO_ID}
       GRPC_ADDR: :${USERS_PORT}
       MYSQL_DATABASE: users
       MYSQL_USER: root
       MYSQL_PASSWORD:  ${MYSQL_PASSWORD}
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
-      SQLITE3: "target/test.db"
-      TRELLO_ID: ${TRELLO_ID}
   rello:
     expose:
       - ${RELLO_PORT}

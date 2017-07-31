@@ -18,7 +18,6 @@ services:
       - ${USERS_PORT_EXTERNAL}:${USERS_PORT}
     volumes:
       - "$GOPATH/src/github.com/myambition/ambition/services/users/target:/target"
-    env_file: .secret
   rello:
     extends:
       file: docker-compose.common.yml
