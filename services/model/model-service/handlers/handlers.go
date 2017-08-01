@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"golang.org/x/net/context"
 	//"os"
 	"time"
@@ -56,17 +55,17 @@ func (s ambitionService) CreateOccurrence(ctx context.Context, in *pb.CreateOccu
 		return nil, errors.Wrap(err, "cannot create time location UTC-7")
 	}
 	nowutc := time.Now()
-	fmt.Println(nowutc)
-	now := nowutc.In(utc7).String()
-	fmt.Println(now)
+	logger.Debug().Log("time", nowutc)
+	now := nowutc.In(utc7)
+	logger.Debug().Log("time", now)
 
 	occurrence := in.GetOccurrence()
 	if occurrence == nil {
 		return nil, errors.New("cannot create nil occurrence")
 	}
-	if occurrence.GetDatetime() == "" {
-		occurrence.Datetime = now
-	}
+	//if occurrence.GetDatetime() == "" {
+	//occurrence.Datetime = now
+	//}
 
 	action, err := s.db.ReadActionByID(occurrence.GetActionID())
 	if err != nil {
@@ -74,11 +73,11 @@ func (s ambitionService) CreateOccurrence(ctx context.Context, in *pb.CreateOccu
 	}
 	if action.GetUserID() != in.GetUserID() {
 		// TODO: Replace this "logging" with real logging
-		fmt.Printf("action-user-id: %d\nuser-id:%d\n", action.GetUserID(), in.GetUserID())
+		logger.Debug().Log("action-user-id", action.GetUserID(), "user-id", in.GetUserID())
 		return nil, errors.New("cannot create occurrence for action not owned by user")
 	}
 
-	o, err := s.db.CreateOccurrence(occurrence)
+	o, err := s.db.CreateOccurrence(action.GetID(), now, in.GetOccurrence().GetData())
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot create occurrence")
 	}

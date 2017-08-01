@@ -3,11 +3,14 @@ package mysql
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"time"
+
 	"github.com/pkg/errors"
-	//"github.com/adamryman/db"
 
 	pb "github.com/myambition/ambition/services/model/model-service"
 )
+
+var DatetimeFormat = "2006-01-02 15:04:05"
 
 func Open(conn string) (*Database, error) {
 	d, err := sql.Open("mysql", conn)
@@ -36,15 +39,20 @@ func (d *Database) CreateAction(in *pb.Action) (*pb.Action, error) {
 	return in, nil
 }
 
-func (d *Database) CreateOccurrence(in *pb.Occurrence) (*pb.Occurrence, error) {
+func (d *Database) CreateOccurrence(actionId int64, date time.Time, data string) (*pb.Occurrence, error) {
 	const query = `INSERT INTO occurrences(action_id, datetime, data) VALUES (?, ?, ?)`
-	id, err := exec(d.db, query, in.GetActionID(), in.GetDatetime(), in.GetData())
+	id, err := exec(d.db, query, actionId, date.Format(DatetimeFormat), data)
 	if err != nil {
 		return nil, err
 	}
-	in.ID = id
+	resp := pb.Occurrence{
+		ID:       id,
+		ActionID: actionId,
+		Datetime: date.Format(DatetimeFormat),
+		Data:     data,
+	}
 
-	return in, nil
+	return &resp, nil
 }
 
 func (d *Database) ReadActionByID(id int64) (*pb.Action, error) {
