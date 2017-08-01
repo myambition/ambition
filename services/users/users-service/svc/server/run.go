@@ -77,7 +77,7 @@ func Run(cfg Config, logger log.Logger) {
 
 	// Debug listener.
 	go func() {
-		logger := log.NewContext(logger).With("transport", "debug")
+		logger := log.With(logger, "transport", "debug")
 
 		m := http.NewServeMux()
 		m.Handle("/debug/pprof/", http.HandlerFunc(pprof.Index))
@@ -92,7 +92,7 @@ func Run(cfg Config, logger log.Logger) {
 
 	// HTTP transport.
 	go func() {
-		logger := log.NewContext(logger).With("transport", "HTTP")
+		logger := log.With(logger, "transport", "HTTP")
 		h := svc.MakeHTTPHandler(ctx, endpoints, logger)
 		logger.Log("addr", cfg.HTTPAddr)
 		errc <- http.ListenAndServe(cfg.HTTPAddr, h)
@@ -100,7 +100,7 @@ func Run(cfg Config, logger log.Logger) {
 
 	// gRPC transport.
 	go func() {
-		logger := log.NewContext(logger).With("transport", "gRPC")
+		logger := log.With(logger, "transport", "gRPC")
 
 		ln, err := net.Listen("tcp", cfg.GRPCAddr)
 		if err != nil {

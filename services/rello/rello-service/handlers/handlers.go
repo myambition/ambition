@@ -16,29 +16,34 @@ import (
 	modelClient "github.com/myambition/ambition/services/model/model-service/svc/client/grpc"
 	usersClient "github.com/myambition/ambition/services/users/users-service/svc/client/grpc"
 
-	"github.com/davecgh/go-spew/spew"
+	//"github.com/davecgh/go-spew/spew"
+
+	"github.com/myambition/ambition/internal/logger"
 )
 
 const trelloTime = "2006-01-02T15:04:05.999Z07:00"
 
 // NewService returns a naïve, stateless implementation of Service.
 func NewService() pb.RelloServer {
+	logger.Init("service", "rello")
+	logger.Info().Log("msg", "new_rello_service")
 	// TODO: Create ambitionSVC and usersSVC clients
 	// TODO switch to grpc clients
 	modelConnStr := os.Getenv("MODEL_HOST") + ":" + os.Getenv("MODEL_PORT")
-	fmt.Println(modelConnStr)
+	//fmt.Println(modelConnStr)
 	modelConn, err := grpc.Dial(modelConnStr, grpc.WithInsecure(), grpc.WithTimeout(time.Second))
 	m, err := modelClient.New(modelConn)
 	if err != nil {
 		panic(err)
 	}
 	usersConnStr := os.Getenv("USERS_HOST") + ":" + os.Getenv("USERS_PORT")
-	fmt.Println(usersConnStr)
+	//fmt.Println(usersConnStr)
 	usersConn, err := grpc.Dial(usersConnStr, grpc.WithInsecure(), grpc.WithTimeout(time.Second))
 	u, err := usersClient.New(usersConn)
 	if err != nil {
 		panic(err)
 	}
+	logger.Info().Log("msg", "done connection")
 
 	return relloService{
 		model: m,
@@ -54,11 +59,10 @@ type relloService struct {
 // CheckListWebhook implements Service.
 // TODO: Auth middleware using user trello webhookcallback
 func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpdate) (*pb.Empty, error) {
-	fmt.Println(spew.Sdump(in))
-	fmt.Println(spew.Sdump(in.GetAction()))
-	fmt.Println(spew.Sdump(in.GetAction().GetIdMemberCreator()))
+	logger.Debug().Log("action", in.GetAction())
+	logger.Debug().Log("member_creator_id", in.GetAction().GetIdMemberCreator())
 
-	fmt.Println("Contacting users service")
+	logger.Debug().Log("msg", "Contacting users service")
 	user, err := s.users.ReadUser(ctx,
 		&usersSVC.User{
 			Trello: &usersSVC.TrelloInfo{
@@ -67,12 +71,10 @@ func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpda
 			Info: &usersSVC.UserInfo{},
 		})
 	if err != nil {
-		//TODO: Wrap error
-		fmt.Println("wut", err)
 		return nil, err
 	}
 
-	fmt.Println("switch " + in.Action.Type)
+	logger.Debug().Log("switch ", in.Action.Type)
 	cItem := in.Action.Data.CheckItem
 	switch in.Action.Type {
 	case "createCheckItem":
@@ -81,20 +83,20 @@ func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpda
 		// UserId hardcoded to 1
 		_ = in.Action.MemberCreator.Id
 
-		fmt.Println("userid", user.GetID())
+		logger.Debug().Log("userid", user.GetID())
 		action, err := s.model.CreateAction(ctx,
 			&modelSVC.Action{
 				Name:   cItem.GetName(),
 				UserID: user.GetID(),
 			})
 		if err != nil {
-			fmt.Println(errors.Wrap(err, "cannot create action"))
+			logger.Error().Log("err", errors.Wrap(err, "cannot create action"))
 			break
 		}
-		fmt.Printf("%s action created\n", action.Name)
+		logger.Debug().Log("msg", "action created", "action", action.Name)
 	case "updateCheckItemStateOnCard":
 		if cItem.State == "incomplete" {
-			fmt.Printf("%q is being unchecked\n", cItem.Name)
+			logger.Debug().Log("msg", "uncheck", "check_item", cItem.Name)
 			break
 		}
 		action, err := s.model.ReadAction(ctx,
@@ -106,7 +108,7 @@ func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpda
 		date, err := time.Parse(trelloTime, *dateString)
 		_ = date
 		if err != nil {
-			fmt.Println(errors.Wrap(err, "time parsing failed"))
+			logger.Error().Log("err", errors.Wrap(err, "time parsing failed"))
 			break
 		}
 		// TODO: log occurrence
@@ -127,7 +129,7 @@ func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpda
 		// TODO: Create Occurrence with the ActionId from CheckItem.Id
 		// Maps to action id
 	default:
-		fmt.Println(in.Action.Type)
+		logger.Debug().Log("action_type ", in.Action.Type)
 	}
 	return nil, nil
 }

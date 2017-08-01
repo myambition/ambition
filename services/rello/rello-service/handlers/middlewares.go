@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"github.com/myambition/ambition/internal/middlewares"
+
 	pb "github.com/myambition/ambition/services/rello/rello-service"
 	"github.com/myambition/ambition/services/rello/rello-service/svc"
 )
@@ -24,6 +26,7 @@ func WrapEndpoints(in svc.Endpoints) svc.Endpoints {
 	// report the endpoint name for free.
 	// github.com/TuneLab/truss/_example/middlewares/labeledmiddlewares.go for examples.
 	// in.WrapAllLabeledExcept(errorCounter(statsdCounter), "Status", "Ping")
+	in.WrapAllLabeledExcept(middlewares.LogError)
 
 	// How to apply a middleware to a single endpoint.
 	// in.ExampleEndpoint = authMiddleware(in.ExampleEndpoint)

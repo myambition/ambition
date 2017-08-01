@@ -17,6 +17,14 @@ service Rello {
       body: "*"
     };
   }
+  rpc EmptyRPC(Empty) returns (Empty) {
+    option (google.api.http) = {
+      custom: {
+        kind: "head"
+        path: "/"
+      }
+    };
+  }
 }
 
 message Empty{}

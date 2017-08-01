@@ -8,6 +8,8 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/myambition/ambition/internal/logger"
+
 	pb "github.com/myambition/ambition/services/model/model-service"
 	//sql "github.com/adamryman/model/internal/sqlite"
 	"github.com/adamryman/kit/dbconn"
@@ -16,6 +18,7 @@ import (
 
 // NewService returns a naïve, stateless implementation of Service.
 func NewService() pb.ModelServer {
+	logger.Init("service", "model")
 	//database, err := sql.Open(os.Getenv("SQLITE3"))
 
 	database, err := sql.Open(dbconn.FromENV("MYSQL").MySQL())
