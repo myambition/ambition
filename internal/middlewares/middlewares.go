@@ -11,7 +11,7 @@ func LogError(label string, in endpoint.Endpoint) endpoint.Endpoint {
 		resp, err = in(ctx, req)
 		defer func(inerr error) {
 			if inerr != nil {
-				logger.Error().Log("endpoint", label, "err", err)
+				logger.LogError(err, "endpoint", label)
 			}
 		}(err)
 		return

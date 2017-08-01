@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	globalLogger myLogger
+	globalLogger levelLogger
 )
 
 func init() {
@@ -29,13 +29,59 @@ func init() {
 	stdlog.SetFlags(0)
 	stdlog.SetOutput(log.NewStdlibAdapter(lctx))
 
-	globalLogger = myLogger{lctx}
+	globalLogger = levelLogger{lctx}
 }
 
+// Init adds values to the globalLogger, having them be on all logs
 func Init(keyvals ...interface{}) {
-	globalLogger = myLogger{log.With(globalLogger.Logger, keyvals...)}
+	globalLogger = levelLogger{log.With(globalLogger.Logger, keyvals...)}
 }
 
+func Info() log.Logger {
+	return globalLogger.Info()
+}
+func Debug() log.Logger {
+	return globalLogger.Debug()
+}
+func Error() log.Logger {
+	return globalLogger.Error()
+}
+func With(keyvals ...interface{}) Leveler {
+	return globalLogger.With(keyvals...)
+}
+func WithCustomDepth(depth int, keyvals ...interface{}) Leveler {
+	return globalLogger.WithCustomDepth(depth, keyvals...)
+}
+func LogError(err error, keyvals ...interface{}) error {
+	return globalLogger.LogError(err, keyvals...)
+}
+
+func (l levelLogger) Info() log.Logger {
+	return level.Info(l.Logger)
+}
+func (l levelLogger) Debug() log.Logger {
+	return level.Debug(l.Logger)
+}
+func (l levelLogger) Error() log.Logger {
+	return level.Error(l.Logger)
+}
+func (l levelLogger) With(keyvals ...interface{}) Leveler {
+	lctx := log.With(l.Logger, keyvals...)
+	return levelLogger{lctx}
+}
+func (l levelLogger) WithCustomDepth(depth int, keyvals ...interface{}) Leveler {
+	lctx := log.With(l.Logger,
+		"caller", caller(depth),
+		"function", function(depth),
+	)
+	lctx = log.With(lctx, keyvals...)
+	return levelLogger{lctx}
+}
+func (l levelLogger) LogError(err error, keyvals ...interface{}) error {
+	return l.WithCustomDepth(5, keyvals...).Error().Log("err", err)
+}
+
+// Leveler forces a levelLogger to chose a level before being able to log
 type Leveler interface {
 	With(keyval ...interface{}) Leveler
 	Info() log.Logger
@@ -43,43 +89,11 @@ type Leveler interface {
 	Error() log.Logger
 }
 
-type myLogger struct {
+type levelLogger struct {
 	log.Logger
 }
 
-func Info() log.Logger {
-	return globalLogger.Info()
-}
-
-func (l myLogger) Info() log.Logger {
-	return level.Info(l.Logger)
-}
-
-func Debug() log.Logger {
-	return globalLogger.Debug()
-}
-
-func (l myLogger) Debug() log.Logger {
-	return level.Debug(l.Logger)
-}
-
-func Error() log.Logger {
-	return globalLogger.Error()
-}
-
-func (l myLogger) Error() log.Logger {
-	return level.Error(l.Logger)
-}
-
-func With(keyvals ...interface{}) Leveler {
-	lctx := log.With(globalLogger.Logger, keyvals...)
-	return myLogger{lctx}
-}
-
-func (l myLogger) With(keyvals ...interface{}) Leveler {
-	lctx := log.With(l.Logger, keyvals...)
-	return myLogger{lctx}
-}
+// Helpers
 
 func caller(depth int) log.Valuer {
 	return func() interface{} {
