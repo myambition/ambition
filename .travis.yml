@@ -1,3 +1,6 @@
+sudo: true
+dist: trusty
+
 language: go
 
 go:
@@ -5,8 +8,17 @@ go:
 
 go_import_path: github.com/myambition/ambition
 
-script:
-  - go build -v github.com/myambition/ambition/...
+jobs:
+  include:
+    - stage: test
+      script:
+        - go build -v github.com/myambition/ambition/...
+    - stage: build and deploy
+      branches:
+        only:
+          - master
+      script:
+        - echo true
 
 notifications:
   email: false
