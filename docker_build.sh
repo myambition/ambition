@@ -3,6 +3,8 @@
 set -e
 [[ -z $DEBUG ]] || set -x
 
+docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
 cur_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 services="rello users model"

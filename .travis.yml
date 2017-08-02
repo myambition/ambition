@@ -1,12 +1,20 @@
+sudo: true
+dist: trusty
 language: go
-
 go:
-  - 1.8.x
-
+- 1.8.x
 go_import_path: github.com/myambition/ambition
-
-script:
-  - go build -v github.com/myambition/ambition/...
-
+jobs:
+  include:
+  - stage: test
+    script:
+    - go build -v github.com/myambition/ambition/...
+  - stage: build and deploy
+    script:
+    - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./docker_build.sh; fi
 notifications:
   email: false
+env:
+  global:
+  - secure: gUPtSvWipPBZu8f05Cxh8uzCT0Y3jHZjJxLSwFRNuIhDIGIr9wY4vlQLOzS87vDcEePvJsAh7LX4mWdwFX3NjcXzg8WZoiWvjlvBYKNX7J/jdoZYLuJNwNd+oHnsNfcKM879axQxH18JBpJbxaJp/e8ruM0t2h9DqdQmL0qYxTlipNl0/UlpwASMPKOTXMcXJG6EXRWy8+6UTyZsmIp1lum+BJzc7I0BsVHPJvVxR85Y9hjjPCtY2TCmLiy7Gf9MpifuWVUx4W+0Y/l5FHCZbLum58Eaz5JKD/UCR0PTqAGqz2rgTHtzbRtVd3edpb0bFIyllkSQ8NKA/c0WomB6IPx+Pvy0zJ5ftggSKPdR1GSm8TBpQ4zKkptPs9EZrbT5ybencQK9YpSjIVvXAjEVkXcjuI0aoxgi9L+XycgW/0EpvqBb36ahKOkLo2jKHGKONZLRBw3wL7Ybkj8zVYlHsrsxU+wvqmhzVJnNipm3hdGTWy27gCUaavczH6trOSTBaVTYICMXF07kgF5FfSKu7kqAhfAUhVB5iFVKTkoVg1jf4BP7nWCRCpmbGRnx7Sm13Ek1tDpd6agcBj8ozdNcw+grPbL9vWoQQir3LyyUYQkQgsETMctqLzwFk3FgZ2owBTWefbWj5bsEy7DD9+iQv8ylaMDpxnXDYVgXR127ey0=
+  - secure: FY1YEW17Ho6yJPFZ82z0PDZl/VpuPiZvqun0p4DqlKRFQUV9vESvuiQePGGtmh/lGW6rL+qucUh7wkh4Tk9t3oCmRwp9kc6HDwJVzYvXysuHAzdqvQxnY1ze5nrozpAUnD8lWllYT66mnZSqo6M1RTCbAVyr7yzbQvcpx/xHlrJjb9EsXJ/+WCsUf2Rn8vXPYoJ+1em7XRNvBd7J6STzgNnd2PhfDrLBHX09OL3XuE/gMpUvWqtfF+w8h9T3AbBLeSNgUJmQCO412ZMpBTUnE/ysLp3W66Z0LuVwpJN5Q1rV7/MhcGjtGhs3BxTKxM9voxUiMtv62uO05hxib5kGHSjGKWMVXKeV8DKEvNSuSgLKIgc+dhsignIB9YPWwT173UqaOFehq/uLqoETfznBJa4U+edwL2G+odOe/TH9teClxj/CRh+9PaAxFThfZAoqxP0yw8xWapcvKzNbuANpXLwDUMx+h63ZIRZ6t4jOeTLk700d5WPmDMfJNOjBM2H6ivsB1e7xYtwFYuHTVUC9JoVpzsSt3sUgmOWrzK3wgLb6HV5Hh5Di/SDQoSFuhwiupvBJBpsH1bq1DBTsHhEpb8yZfKFwZEYR/UIpf7VSi6wFaY1zUiENHZC4lEVFOAhBMz4ibchxESMgqldFNMcSGS7GmWh3G/MGcddSb319Imc=
