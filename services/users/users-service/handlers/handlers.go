@@ -1,17 +1,15 @@
 package handlers
 
 import (
-	"golang.org/x/net/context"
-	//"os"
+	"context"
 
-	"github.com/pkg/errors"
+	sql "github.com/myambition/ambition/services/users/internal/mysql"
+	pb "github.com/myambition/ambition/services/users/users-service"
 
 	"github.com/myambition/ambition/internal/logger"
 
-	//sql "github.com/adamryman/ambition/users/internal/sqlite"
 	"github.com/adamryman/kit/dbconn"
-	sql "github.com/myambition/ambition/services/users/internal/mysql"
-	pb "github.com/myambition/ambition/services/users/users-service"
+	"github.com/pkg/errors"
 )
 
 // NewService returns a naïve, stateless implementation of Service.
@@ -37,7 +35,6 @@ type usersService struct {
 }
 
 // CreateUser implements Service.
-// TODO:
 func (s usersService) CreateUser(ctx context.Context, in *pb.User) (*pb.User, error) {
 	// TODO: input validation
 	u, err := s.db.CreateUser(in)

@@ -21,34 +21,34 @@
 			"revisionTime": "2017-07-11T18:34:51Z"
 		},
 		{
-			"checksumSHA1": "bVTfSjDEEXDWFVbCrxz/PUOoZbA=",
+			"checksumSHA1": "0x6tKraaJRo//YVEB2FotP2Mhww=",
 			"path": "github.com/go-kit/kit/endpoint",
-			"revision": "bbb2306ec1318f1da5e9cba56bf933d0c7641e84",
-			"revisionTime": "2017-01-17T21:42:39Z"
+			"revision": "8e03b4c61a9cf94dd91cd842c7cdc669729e873f",
+			"revisionTime": "2017-08-03T22:00:30Z"
 		},
 		{
 			"checksumSHA1": "KrIRJ4p3nRze4NcxfgX5+N9+D1M=",
 			"path": "github.com/go-kit/kit/log",
-			"revision": "19463ea8b215413a29c3513aa3a76181f4bac58d",
-			"revisionTime": "2017-07-26T03:35:38Z"
+			"revision": "8e03b4c61a9cf94dd91cd842c7cdc669729e873f",
+			"revisionTime": "2017-08-03T22:00:30Z"
 		},
 		{
 			"checksumSHA1": "t7aTpDH0h4BZcGU0KkUr14QQG2w=",
 			"path": "github.com/go-kit/kit/log/level",
-			"revision": "19463ea8b215413a29c3513aa3a76181f4bac58d",
-			"revisionTime": "2017-07-26T03:35:38Z"
+			"revision": "8e03b4c61a9cf94dd91cd842c7cdc669729e873f",
+			"revisionTime": "2017-08-03T22:00:30Z"
 		},
 		{
-			"checksumSHA1": "q6MUdB7rNM3HZWnMbiNx9E+LUo8=",
+			"checksumSHA1": "ogB9IfkzzeVAEbfiZsNJHet2STQ=",
 			"path": "github.com/go-kit/kit/transport/grpc",
-			"revision": "bbb2306ec1318f1da5e9cba56bf933d0c7641e84",
-			"revisionTime": "2017-01-17T21:42:39Z"
+			"revision": "8e03b4c61a9cf94dd91cd842c7cdc669729e873f",
+			"revisionTime": "2017-08-03T22:00:30Z"
 		},
 		{
-			"checksumSHA1": "6bAaErvHE4grgd0PoVFXdSNZ7CY=",
+			"checksumSHA1": "qVNlGKkuj56lWYtY+4wHYmNcdZU=",
 			"path": "github.com/go-kit/kit/transport/http",
-			"revision": "bbb2306ec1318f1da5e9cba56bf933d0c7641e84",
-			"revisionTime": "2017-01-17T21:42:39Z"
+			"revision": "8e03b4c61a9cf94dd91cd842c7cdc669729e873f",
+			"revisionTime": "2017-08-03T22:00:30Z"
 		},
 		{
 			"checksumSHA1": "KxX/Drph+byPXBFIXaCZaCOAnrU=",

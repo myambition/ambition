@@ -5,12 +5,10 @@ package svc
 
 import (
 	"bytes"
+	"context"
 	"io"
 	"io/ioutil"
 	"net/http"
-
-	"golang.org/x/net/context"
-	// This service
 )
 
 /*
@@ -18,12 +16,12 @@ var customHTTPBefore httptransport.RequestFunc
 
 // MakeHTTPHandler returns a handler that makes a set of endpoints available
 // on predefined paths.
-func MakeHTTPHandler(ctx context.Context, endpoints Endpoints, logger log.Logger) http.Handler {
+func MakeHTTPHandler(endpoints Endpoints) http.Handler {
 	serverOptions := []httptransport.ServerOption{
 	httptransport.ServerBefore(headersToContext, customHTTPBefore),
 	httptransport.ServerErrorEncoder(errorEncoder),
 	httptransport.ServerAfter(httptransport.SetContentType(contentType)),
-}
+
 */
 func init() {
 	customHTTPBefore = dumpBodyToContext

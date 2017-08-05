@@ -127,6 +127,7 @@ Rello will need an application secret key, in order to make sure
  parse the incoming data. It ensures that a request is from trello by doing
  a base64 encoding with the users secrete key.
  it then calls out to ambition-model to create an occurrence |
+| EmptyRPC | Empty | Empty |  |
 
 #### Rello - Http Methods
 

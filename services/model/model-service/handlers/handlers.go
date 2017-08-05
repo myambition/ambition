@@ -1,24 +1,21 @@
 package handlers
 
 import (
-	"golang.org/x/net/context"
-	//"os"
+	"context"
 	"time"
 
-	"github.com/pkg/errors"
+	sql "github.com/myambition/ambition/services/model/internal/mysql"
+	pb "github.com/myambition/ambition/services/model/model-service"
 
 	"github.com/myambition/ambition/internal/logger"
 
-	pb "github.com/myambition/ambition/services/model/model-service"
-	//sql "github.com/adamryman/model/internal/sqlite"
 	"github.com/adamryman/kit/dbconn"
-	sql "github.com/myambition/ambition/services/model/internal/mysql"
+	"github.com/pkg/errors"
 )
 
 // NewService returns a naïve, stateless implementation of Service.
 func NewService() pb.ModelServer {
 	logger.Init("service", "model")
-	//database, err := sql.Open(os.Getenv("SQLITE3"))
 
 	database, err := sql.Open(dbconn.FromENV("MYSQL").MySQL())
 	if err != nil {

@@ -1,24 +1,23 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
-	"golang.org/x/net/context"
 	"os"
 	"time"
 
-	"github.com/pkg/errors"
-	"google.golang.org/grpc"
+	pb "github.com/myambition/ambition/services/rello/rello-service"
 
 	modelSVC "github.com/myambition/ambition/services/model/model-service"
-	pb "github.com/myambition/ambition/services/rello/rello-service"
 	usersSVC "github.com/myambition/ambition/services/users/users-service"
 
 	modelClient "github.com/myambition/ambition/services/model/model-service/svc/client/grpc"
 	usersClient "github.com/myambition/ambition/services/users/users-service/svc/client/grpc"
 
-	//"github.com/davecgh/go-spew/spew"
-
 	"github.com/myambition/ambition/internal/logger"
+
+	"github.com/pkg/errors"
+	"google.golang.org/grpc"
 )
 
 const trelloTime = "2006-01-02T15:04:05.999Z07:00"
@@ -132,4 +131,11 @@ func (s relloService) CheckListWebhook(ctx context.Context, in *pb.ChecklistUpda
 		logger.Debug().Log("action_type ", in.Action.Type)
 	}
 	return nil, nil
+}
+
+// EmptyRPC implements Service.
+func (s relloService) EmptyRPC(ctx context.Context, in *pb.Empty) (*pb.Empty, error) {
+	var resp pb.Empty
+	resp = pb.Empty{}
+	return &resp, nil
 }

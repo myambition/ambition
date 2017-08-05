@@ -1,9 +1,11 @@
 package middlewares
 
 import (
+	"context"
+
 	"github.com/go-kit/kit/endpoint"
+
 	"github.com/myambition/ambition/internal/logger"
-	"golang.org/x/net/context"
 )
 
 func LogError(label string, in endpoint.Endpoint) endpoint.Endpoint {

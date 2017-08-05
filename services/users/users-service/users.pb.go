@@ -21,6 +21,7 @@ import _ "github.com/TuneLab/truss/deftree/googlethirdparty"
 
 import (
 	context "golang.org/x/net/context"
+	newcontext "context"
 	grpc "google.golang.org/grpc"
 )
 
@@ -248,17 +249,17 @@ func (c *usersClient) DeleteUser(ctx context.Context, in *User, opts ...grpc.Cal
 type UsersServer interface {
 	// Create takes information about a user and creates an entry
 	// It returns that User with it's ID populated
-	CreateUser(context.Context, *User) (*User, error)
+	CreateUser(newcontext.Context, *User) (*User, error)
 	// ReadUser takes some information about a user and tries to find the
 	// user with that information
 	// Accepted values: ID, Info.Username, Info.email, and Trello.ID
-	ReadUser(context.Context, *User) (*User, error)
+	ReadUser(newcontext.Context, *User) (*User, error)
 	// UpdateUser requires an ID, which can be obttained from ReadUser.
 	// All other non-zerp values will be updated
-	UpdateUser(context.Context, *User) (*User, error)
+	UpdateUser(newcontext.Context, *User) (*User, error)
 	// DeleteUser requires an ID, as a Read before a delete is a good idea.
 	// It will return User with just thre requested ID on success
-	DeleteUser(context.Context, *User) (*User, error)
+	DeleteUser(newcontext.Context, *User) (*User, error)
 }
 
 func RegisterUsersServer(s *grpc.Server, srv UsersServer) {

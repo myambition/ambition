@@ -25,6 +25,7 @@ import _ "github.com/TuneLab/truss/deftree/googlethirdparty"
 
 import (
 	context "golang.org/x/net/context"
+	newcontext "context"
 	grpc "google.golang.org/grpc"
 )
 
@@ -322,21 +323,21 @@ func (c *modelClient) ReadOccurrences(ctx context.Context, in *Action, opts ...g
 
 type ModelServer interface {
 	// CreateAction requires a UserID and a Name
-	CreateAction(context.Context, *Action) (*Action, error)
+	CreateAction(newcontext.Context, *Action) (*Action, error)
 	// CreateOccurrence requires a UserID and Occurrence.ActionID
 	// TODO: If Datetime is provided it will be used
 	// TODO: If Data is provided it will be stored
-	CreateOccurrence(context.Context, *CreateOccurrenceRequest) (*Occurrence, error)
+	CreateOccurrence(newcontext.Context, *CreateOccurrenceRequest) (*Occurrence, error)
 	// ReadAction requires either an ID, or BOTH a UserId and Name
-	ReadAction(context.Context, *Action) (*Action, error)
+	ReadAction(newcontext.Context, *Action) (*Action, error)
 	// ReadAction
 	// TODO:
-	ReadActions(context.Context, *User) (*ActionsResponse, error)
-	ReadOccurrencesByDate(context.Context, *OccurrencesByDateReq) (*OccurrencesResponse, error)
+	ReadActions(newcontext.Context, *User) (*ActionsResponse, error)
+	ReadOccurrencesByDate(newcontext.Context, *OccurrencesByDateReq) (*OccurrencesResponse, error)
 	// ReadOccurrences takes an action which must be populated with a
 	// UserID and an ActionID which must match the values for that action
 	// TODO:
-	ReadOccurrences(context.Context, *Action) (*OccurrencesResponse, error)
+	ReadOccurrences(newcontext.Context, *Action) (*OccurrencesResponse, error)
 }
 
 func RegisterModelServer(s *grpc.Server, srv ModelServer) {
