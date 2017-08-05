@@ -28,17 +28,17 @@ func NewService() pb.ModelServer {
 		// There will also need to be retry logic for the database methods
 		panic(err)
 	}
-	return ambitionService{
+	return modelService{
 		db: database,
 	}
 }
 
-type ambitionService struct {
+type modelService struct {
 	db *sql.Database
 }
 
 // CreateAction implements Service.
-func (s ambitionService) CreateAction(ctx context.Context, in *pb.Action) (*pb.Action, error) {
+func (s modelService) CreateAction(ctx context.Context, in *pb.Action) (*pb.Action, error) {
 	// TODO: Input validation
 	a, err := s.db.CreateAction(in)
 	if err != nil {
@@ -48,7 +48,7 @@ func (s ambitionService) CreateAction(ctx context.Context, in *pb.Action) (*pb.A
 }
 
 // CreateOccurrence implements Service.
-func (s ambitionService) CreateOccurrence(ctx context.Context, in *pb.CreateOccurrenceRequest) (*pb.Occurrence, error) {
+func (s modelService) CreateOccurrence(ctx context.Context, in *pb.CreateOccurrenceRequest) (*pb.Occurrence, error) {
 	utc7, err := time.LoadLocation("America/Los_Angeles")
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot create time location UTC-7")
@@ -83,7 +83,7 @@ func (s ambitionService) CreateOccurrence(ctx context.Context, in *pb.CreateOccu
 }
 
 // ReadAction implements Service.
-func (s ambitionService) ReadAction(ctx context.Context, in *pb.Action) (*pb.Action, error) {
+func (s modelService) ReadAction(ctx context.Context, in *pb.Action) (*pb.Action, error) {
 	if in.GetID() != 0 {
 		a, err := s.db.ReadActionByID(in.GetID())
 		if err != nil {
@@ -104,7 +104,7 @@ func (s ambitionService) ReadAction(ctx context.Context, in *pb.Action) (*pb.Act
 
 // ReadActions implements Service.
 // TODO: Implement
-func (s ambitionService) ReadActions(ctx context.Context, in *pb.User) (*pb.ActionsResponse, error) {
+func (s modelService) ReadActions(ctx context.Context, in *pb.User) (*pb.ActionsResponse, error) {
 	// TODO: Input validation
 	var resp pb.ActionsResponse
 	resp = pb.ActionsResponse{
@@ -115,7 +115,7 @@ func (s ambitionService) ReadActions(ctx context.Context, in *pb.User) (*pb.Acti
 
 // ReadOccurrences implements Service.
 // TODO: Implement
-func (s ambitionService) ReadOccurrences(ctx context.Context, in *pb.Action) (*pb.OccurrencesResponse, error) {
+func (s modelService) ReadOccurrences(ctx context.Context, in *pb.Action) (*pb.OccurrencesResponse, error) {
 	// TODO: Input validation
 	var resp pb.OccurrencesResponse
 	resp = pb.OccurrencesResponse{
@@ -125,7 +125,7 @@ func (s ambitionService) ReadOccurrences(ctx context.Context, in *pb.Action) (*p
 }
 
 // ReadOccurrencesByDate implements Service.
-func (s ambitionService) ReadOccurrencesByDate(ctx context.Context, in *pb.OccurrencesByDateReq) (*pb.OccurrencesResponse, error) {
+func (s modelService) ReadOccurrencesByDate(ctx context.Context, in *pb.OccurrencesByDateReq) (*pb.OccurrencesResponse, error) {
 	var resp pb.OccurrencesResponse
 	if in.GetActionID() != 0 {
 
