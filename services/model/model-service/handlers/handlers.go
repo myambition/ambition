@@ -49,7 +49,6 @@ func (s ambitionService) CreateAction(ctx context.Context, in *pb.Action) (*pb.A
 
 // CreateOccurrence implements Service.
 func (s ambitionService) CreateOccurrence(ctx context.Context, in *pb.CreateOccurrenceRequest) (*pb.Occurrence, error) {
-	// TODO: Make sure database accepts this time format
 	utc7, err := time.LoadLocation("America/Los_Angeles")
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot create time location UTC-7")
@@ -72,7 +71,6 @@ func (s ambitionService) CreateOccurrence(ctx context.Context, in *pb.CreateOccu
 		return nil, errors.Wrap(err, "cannot read action")
 	}
 	if action.GetUserID() != in.GetUserID() {
-		// TODO: Replace this "logging" with real logging
 		logger.Debug().Log("action-user-id", action.GetUserID(), "user-id", in.GetUserID())
 		return nil, errors.New("cannot create occurrence for action not owned by user")
 	}
