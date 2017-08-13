@@ -16,7 +16,6 @@ services:
     env_file:
       - .secret.env
     environment:
-      #TRELLO_ID: ${TRELLO_ID}
       GRPC_ADDR: :${USERS_PORT}
       MYSQL_DATABASE: users
       MYSQL_USER: root
@@ -33,6 +32,6 @@ services:
       USERS_HOST: users
       USERS_PORT: ${USERS_PORT}
   mysql:
-    image: adamryman/ambition-mysql
+    image: myambition/ambition-mysql:latest
     expose:
       - 3306

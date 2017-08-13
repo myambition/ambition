@@ -4,19 +4,25 @@ services:
     extends:
       file: docker-compose.common.yml
       service: model
-    image: adamryman/ambition-model
+    image: myambition/model:prod-latest
   users:
     extends:
       file: docker-compose.common.yml
       service: users
-    image: adamryman/ambition-users
+    image: myambition/rello:prod-latest
   rello:
     extends:
       file: docker-compose.common.yml
       service: rello
-    image: adamryman/ambition-rello
+    image: myambition/rello:prod-latest
     ports:
-      - 80:${RELLO_PORT}
+      - 5040:${RELLO_PORT}
+  web:
+   image: myambition/ambition-web-table:dev
+   expose:
+     - "8080"
+   ports:
+     - "8080:8080"
   mysql:
     extends:
       file: docker-compose.common.yml
