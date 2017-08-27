@@ -12,7 +12,7 @@ for service in $services; do
 		echo "building $service"
 		cd $cur_dir/$service;
 		mkdir -p target
-		go build -o ./target/newrun ./${service}-service/cmd/${service}_d/
+		go build -o ./target/newrun ./${service}-service/cmd/${service}-server/
 		mv ./target/newrun ./target/run
 	)
 done
